@@ -1,0 +1,18 @@
+# Add files here to ignore them from prettier formatting
+
+/dist
+/coverage
+
+package-lock.json
+CHANGELOG.md
+dev.proxy.js
+
+**/.npm
+**/.tmp
+**/node_modules
+**/package.json
+child-pipeline-gitlab-ci.yml
+cypress-cache
+.cypress
+
+.angular

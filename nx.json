@@ -1,0 +1,61 @@
+{
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "npmScope": "mobi",
+    "affected": {
+        "defaultBase": "main"
+    },
+    "tasksRunnerOptions": {
+        "default": {
+            "runner": "nx/tasks-runners/default",
+            "options": {
+                "cacheableOperations": ["build", "lint", "test", "e2e"],
+                "cacheDirectory": "nxcache",
+                "parallel": 2
+            }
+        }
+    },
+    "generators": {
+        "@nx/angular:application": {
+            "style": "scss",
+            "linter": "eslint",
+            "unitTestRunner": "jest",
+            "e2eTestRunner": "cypress"
+        },
+        "@nx/angular:library": {
+            "linter": "eslint",
+            "unitTestRunner": "jest",
+            "style": "scss"
+        },
+        "@nx/angular:component": {
+            "style": "scss"
+        }
+    },
+    "namedInputs": {
+        "default": ["{projectRoot}/**/*.{js,ts,htm,html,json,less,scss}"],
+        "production": [
+            "default",
+            "!{projectRoot}/**/*.{spec,test,mocks}.*",
+            "!{projectRoot}/**/testhelper.ts",
+            "!{projectRoot}/**/test-setup.ts",
+            "!{projectRoot}/jest.config.ts",
+            "!{projectRoot}/.eslintrc.json"
+        ]
+    },
+    "targetDefaults": {
+        "build": {
+            "inputs": ["production", "^production", "{projectRoot}/.gitlab-ci.yml"],
+            "dependsOn": ["^build"]
+        },
+        "lint": {
+            "inputs": ["default"]
+        },
+        "test": {
+            "inputs": ["default", "^production", "!{projectRoot}/.eslintrc.json"],
+            "outputs": ["{projectRoot}/coverage", "{projectRoot}/test-results"]
+        },
+        "e2e": {
+            "inputs": ["default", "^production"],
+            "outputs": ["{projectRoot}/../**/dist/system-test/**/*", "{projectRoot}/../**/test-results/*"]
+        }
+    }
+}

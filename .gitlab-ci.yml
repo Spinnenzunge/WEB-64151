@@ -1,0 +1,16 @@
+'0': u
+'1': 'n'
+'2': d
+'3': e
+'4': f
+'5': i
+'6': 'n'
+'7': e
+'8': d
+showcase:
+    extends: .monorepo-artifact
+    variables:
+        ARTIFACT_PATTERN: /(^|.*,)showcase(,.*|$)/
+    trigger:
+        include: apps/apps/showcase/.gitlab-ci.yml
+        strategy: depend
